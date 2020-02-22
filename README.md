@@ -10,7 +10,7 @@
 [code sandbox](https://codesandbox.io/s/relaxed-noyce-t4el9)
 
 ### Options:
-  Video Options
+  - Video Options
     - Order
       - Most Recent (default)
         - ?order=date 
@@ -19,7 +19,12 @@
     
     - Format
       - Link (default) (redirects to the youtube page)
+        - ?format=link
       - json Returns the videoId (you must format it)
+        - ?format=json
+
+#### Option Example
+https://youtube-title-video.herokuapp.com/v1/watch/UC-lHJZR3Gqxm24_Vd_AJ5Yw?order=viewcount&format=json
     
 
 ### Inspiration
