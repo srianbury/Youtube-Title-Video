@@ -20,7 +20,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // application routes
 app.use(
-  `/api/${process.env.ENVIRONMENT}/${process.env.VERSION}/url`,
+  `/${process.env.VERSION}${process.env.VERSION_NUMBER}/watch`,
   routes.main
 );
 
