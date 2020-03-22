@@ -1,10 +1,11 @@
-import "dotenv/config";
+import dotenv from "dotenv";
 import cors from "cors";
 import bodyParser from "body-parser";
 import express from "express";
 import * as Sentry from "@sentry/node";
-
 import routes from "./routes";
+
+dotenv.config();
 
 const app = express();
 if (process.env.NODE_ENV === "production") {
@@ -19,11 +20,10 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // application routes
-app.use(
-  `/${process.env.VERSION}${process.env.VERSION_NUMBER}/watch`,
-  routes.main
-);
+app.use(routes.main.path, routes.main);
 
 app.listen(process.env.PORT, () =>
   console.log(`listening on port ${process.env.PORT}`)
 );
+
+export default app;
