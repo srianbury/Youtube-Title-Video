@@ -1,5 +1,6 @@
 import { Router } from "express";
 import fetch from "node-fetch";
+import { getPath } from "../common";
 
 const router = Router();
 
@@ -8,6 +9,8 @@ const ORDER_VIEW_COUNT = "viewcount";
 
 const FORMAT_LINK = "link";
 const FORMAT_JSON = "json";
+
+const YOUTUBE_404 = "https://www.youtube.com/error?src=404";
 
 /*
   Returns the url for
@@ -35,6 +38,15 @@ router.get("/:channelId", async (req, res) => {
   const url = `${BASE}?key=${process.env.YOUTUBE_API_KEY}&channelId=${channelId}&part=${GRAPHQUERY_PART}&order=${order}&maxResults=${maxResults}`;
 
   const response = await fetch(url);
+
+  if (response.status !== 200) {
+    if (format == FORMAT_JSON) {
+      return res.status(404).send({ videoId: null });
+    }
+
+    return res.redirect(YOUTUBE_404);
+  }
+
   const result = await response.json();
   let videoUrl = getUrl(order, result);
 
@@ -64,4 +76,6 @@ function watchFormat(url) {
   return `https://www.youtube.com/watch?v=${url}`;
 }
 
+router.path = getPath("watch");
 export default router;
+export { YOUTUBE_404 };
